@@ -1,0 +1,28 @@
+<project name="String Converter" default="package" basedir=".">
+	
+   <property name="project.dir" value="."/>
+   <property name="build.dir" value="${project.dir}/build"/>
+   <property name="package.file" value="${build.dir}/string-converter.jar"/>
+
+	
+   <path id="class.path">
+      <dirset dir="${build.dir}" />
+      <fileset dir="./lib" includes="**/*.jar"/>
+    	<pathelement path="${alfserver.common.dir}/lib/servlet-api.jar" />   	
+   </path>
+   
+   <target name="compile">
+      <mkdir dir="${project.dir}/build" />
+      <javac classpathref="class.path" srcdir="${project.dir}/src" destdir="${project.dir}/build" />
+   </target>
+   
+   <target name="package" depends="compile">
+      <jar destfile="${package.file}">
+        <fileset dir="${project.dir}/classes" excludes="**/custom*,**/*Test" includes="**/*.class" />      	
+        <fileset dir="${build.dir}" excludes="**/custom*,**/*Test*,alfresco-global.properties" />
+        <fileset dir="${project.dir}/src" includes="META-INF/*.*" />    	
+      </jar>
+   </target>
+	
+		
+</project>	
